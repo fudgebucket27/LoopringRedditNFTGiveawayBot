@@ -16,5 +16,8 @@ public class Settings
     public string Exchange { get; set; }
 
     public string MetamaskPrivateKey { get; set; }
+    public string RedditAppId { get; set; }
+    public string RedditRefreshToken { get; set; }
+    public string RedditAccessToken { get; set; }
 }
 
