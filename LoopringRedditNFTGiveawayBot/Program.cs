@@ -11,7 +11,7 @@ using Reddit.Controllers.EventArgs;
 using System.Diagnostics;
 using System.Numerics;
 using System.Text.RegularExpressions;
-using Type = Type;
+using Type = LoopringRedditNFTGiveawayBot.Type;
 
 public static class Program
 {

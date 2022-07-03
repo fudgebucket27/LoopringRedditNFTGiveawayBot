@@ -4,7 +4,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
-
+using LoopringRedditNFTGiveawayBot;
 
 public class TransferTypedData
 {
@@ -35,8 +35,8 @@ public class TransferTypedData
 
     public class Types
     {
-        public List<Type> EIP712Domain { get; set; }
-        public List<Type> Transfer { get; set; }
+        public List<LoopringRedditNFTGiveawayBot.Type> EIP712Domain { get; set; }
+        public List<LoopringRedditNFTGiveawayBot.Type> Transfer { get; set; }
     }
 }
 
