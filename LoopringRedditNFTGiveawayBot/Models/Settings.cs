@@ -14,7 +14,11 @@ public class Settings
     public long ValidUntil { get; set; }
     public int MaxFeeTokenId { get; set; }
     public string Exchange { get; set; }
-
+    public string NftAmount { get; set; }
+    public int NftTokenId { get; set; }
+    public string NftData { get; set; }
+    public string Subreddit { get; set; }
+    public string RedditPostId { get; set; }
     public string MetamaskPrivateKey { get; set; }
     public string RedditAppId { get; set; }
     public string RedditRefreshToken { get; set; }

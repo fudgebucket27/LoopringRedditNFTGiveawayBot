@@ -15,12 +15,6 @@ using Type = LoopringRedditNFTGiveawayBot.Type;
 
 public static class Program
 {
-
-    static string nftAmount = "1"; //the amount of the nft to transfer
-    static int nftTokenId = 34091; //the nft tokenId, not the nftId
-    static string nftData = "0x124d7d15c114fc8bed6177bfc2fab059279ebea3710147cc55aa99ddc28d9506"; //the nftData, not nftId
-    static string subreddit = "fudgeysfactory";
-    static string postId = "t3_vplzs4";
     static bool commentRepy = true;
     static string ethAddressRegexPattern = @"0x[a-fA-F0-9]{40}";
     static string ensAddressRegexPattern = @"([^\s]{1,256}.eth)";
@@ -37,10 +31,13 @@ public static class Program
             .Build();
         settings = config.GetRequiredSection("Settings").Get<Settings>();
 
+        string postId = "t3_" + settings.RedditPostId;
+
         var reddit = new RedditClient(appId: settings.RedditAppId, refreshToken: settings.RedditRefreshToken, accessToken: settings.RedditAccessToken);
-        var post = reddit.Subreddit(subreddit).Post(postId).About();
+        var post = reddit.Subreddit(settings.Subreddit).Post(postId).About();
         post.Comments.NewUpdated += C_NewPostsUpdated;
         post.Comments.MonitorNew();
+        Console.WriteLine($"Now monitoring");
     }
 
     //methods inside aren't async because the storage id needs to be done synchronously
@@ -146,7 +143,7 @@ public static class Program
                 }
             }
 
-            var storageId = loopringService.GetNextStorageId(loopringApiKey, fromAccountId, nftTokenId);
+            var storageId = loopringService.GetNextStorageId(loopringApiKey, fromAccountId, settings.NftTokenId);
             var offChainFee = loopringService.GetOffChainFee(loopringApiKey, fromAccountId, 11, "0");
 
             //Calculate eddsa signautre
@@ -155,8 +152,8 @@ public static class Program
                 Utils.ParseHexUnsigned(exchange),
                 (BigInteger) fromAccountId,
                 (BigInteger) toAccountId,
-                (BigInteger) nftTokenId,
-                BigInteger.Parse(nftAmount),
+                (BigInteger) settings.NftTokenId,
+                BigInteger.Parse(settings.NftAmount),
                 (BigInteger) maxFeeTokenId,
                 BigInteger.Parse(offChainFee.fees[maxFeeTokenId].fee),
                 Utils.ParseHexUnsigned(toAddress),
@@ -207,8 +204,8 @@ public static class Program
             {
                 new MemberValue {TypeName = "address", Value = fromAddress},
                 new MemberValue {TypeName = "address", Value = toAddress},
-                new MemberValue {TypeName = "uint16", Value = nftTokenId},
-                new MemberValue {TypeName = "uint96", Value = BigInteger.Parse(nftAmount)},
+                new MemberValue {TypeName = "uint16", Value = settings.NftTokenId},
+                new MemberValue {TypeName = "uint96", Value = BigInteger.Parse(settings.NftAmount)},
                 new MemberValue {TypeName = "uint16", Value = maxFeeTokenId},
                 new MemberValue {TypeName = "uint96", Value = BigInteger.Parse(offChainFee.fees[maxFeeTokenId].fee)},
                 new MemberValue {TypeName = "uint32", Value = validUntil},
@@ -228,8 +225,8 @@ public static class Program
                 {
                     from = fromAddress,
                     to = toAddress,
-                    tokenID = nftTokenId,
-                    amount = nftAmount,
+                    tokenID = settings.NftTokenId,
+                    amount = settings.NftAmount,
                     feeTokenID = maxFeeTokenId,
                     maxFee = offChainFee.fees[maxFeeTokenId].fee,
                     validUntil = (int)validUntil,
@@ -277,15 +274,15 @@ public static class Program
                 fromAddress: fromAddress,
                 toAccountId: toAccountId,
                 toAddress: toAddress,
-                nftTokenId: nftTokenId,
-                nftAmount: nftAmount,
+                nftTokenId: settings.NftTokenId,
+                nftAmount: settings.NftAmount,
                 maxFeeTokenId: maxFeeTokenId,
                 maxFeeAmount: offChainFee.fees[maxFeeTokenId].fee,
                 storageId.offchainId,
                 validUntil: validUntil,
                 eddsaSignature: eddsaSignature,
                 ecdsaSignature: ecdsaSignature,
-                nftData: nftData
+                nftData: settings.NftData
                 );
             if (nftTransferResponseObject != null)
             {
