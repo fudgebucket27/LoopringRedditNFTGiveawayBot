@@ -43,6 +43,7 @@ public static class Program
         post.Comments.MonitorNew();
     }
 
+    //methods inside aren't async because the storage id needs to be done synchronously
     public static void C_NewPostsUpdated(object sender, CommentsUpdateEventArgs e)
     {
         ILoopringService loopringService = new LoopringService();//Initialize loopring service
