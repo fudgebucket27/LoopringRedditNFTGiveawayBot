@@ -33,7 +33,7 @@ You can export the Loopring related keys out from https://loopring.io. The NFTs 
 
 You will need to create a Reddit Installed App and get your reddit app id, refresh token and access token. KEEP THESE TOKENS PRIVATE
 
-A reddit post id is the "vqyxaz" in this Reddit URL below:
+A reddit post id is the "vqyxaz", the subreddit is "fudgeysfactory" in this Reddit URL below:
 
 https://www.reddit.com/r/fudgeysfactory/comments/vqyxaz/nft_giveaway_test/
 
