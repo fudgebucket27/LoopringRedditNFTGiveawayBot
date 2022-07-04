@@ -120,6 +120,11 @@ public static class Program
                         comment.Reply($"{workingAddress} is not a valid ENS! Please make a new comment with a valid address!");
                         continue;
                     }
+                    catch (Reddit.Exceptions.RedditRateLimitException ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                        continue;
+                    }
                     catch (Reddit.Exceptions.RedditControllerException ex)
                     {
                         Console.WriteLine(ex.Message);
@@ -134,6 +139,11 @@ public static class Program
                 try
                 {
                     comment.Reply("You've already claimed the giveaway!");
+                    continue;
+                }
+                catch (Reddit.Exceptions.RedditRateLimitException ex)
+                {
+                    Console.WriteLine(ex.Message);
                     continue;
                 }
                 catch (Reddit.Exceptions.RedditControllerException ex)
@@ -295,6 +305,11 @@ public static class Program
                         comment.Reply($"Transfer failed with error: {result.resultInfo.message}. Please make a new comment with your address and try again...");
                         continue;
                     }
+                    catch (Reddit.Exceptions.RedditRateLimitException ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                        continue;
+                    }
                     catch (Reddit.Exceptions.RedditControllerException ex)
                     {
                         Console.WriteLine(ex.Message);
@@ -313,6 +328,11 @@ public static class Program
                             try
                             {
                                 comment.Reply($"Sent! Transaction Hash: {result.hash}");
+                                continue;
+                            }
+                            catch(Reddit.Exceptions.RedditRateLimitException ex)
+                            {
+                                Console.WriteLine(ex.Message);
                                 continue;
                             }
                             catch (Reddit.Exceptions.RedditControllerException ex)
