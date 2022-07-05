@@ -15,7 +15,7 @@ using Type = LoopringRedditNFTGiveawayBot.Type;
 
 public static class Program
 {
-    static bool commentRepy = true;
+    static bool commentReply = true;
     static string ethAddressRegexPattern = @"0x[a-fA-F0-9]{40}";
     static string ensAddressRegexPattern = @"([^\s]{1,256}.eth)";
     static Settings settings { get; set; }
@@ -323,7 +323,7 @@ public static class Program
                     {
                         nftRecievers.Add(toAddress);
                         Console.WriteLine($"Transfer to {toAddress} successful!");
-                        if (commentRepy == true)
+                        if (commentReply == true)
                         {
                             try
                             {
