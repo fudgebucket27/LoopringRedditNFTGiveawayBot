@@ -59,7 +59,7 @@ You want the tokenId as the nftTokenId and nftData as nftData.
 Once you have setup the appsettings.json file just run the program in your IDE. It will start monitoring the reddit post and send out the NFTs as new comments come in.
 
 ## Credits
-Monty for the NFT transfer code which I adapted from the original Python source.
+Monty for the NFT transfer code which I adapted to C# from the original Python source.
 
 Taranasus for the ECDSA signing code which I pulled from him LoopringSharp repo.
 
