@@ -61,6 +61,6 @@ Once you have setup the appsettings.json file just run the program in your IDE. 
 ## Credits
 Monty for the NFT transfer code which I adapted to C# from the original Python source.
 
-Taranasus for the ECDSA signing code which I pulled from him LoopringSharp repo.
+Taranasus for the ECDSA signing code which I pulled from his LoopringSharp repo.
 
 Kris Craig for Reddit.NET which is used for interacting with Reddit.
