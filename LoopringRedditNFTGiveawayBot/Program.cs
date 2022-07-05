@@ -95,8 +95,8 @@ public static class Program
             }
 
             string loopringApiKey = settings.LoopringApiKey;//loopring api key KEEP PRIVATE
-            string loopringPrivateKey = settings.LoopringPrivateKey; //loopring private key KEEP PRIVATE
-            var metamaskPrivateKey = settings.MetamaskPrivateKey; //metamask private key KEEP PRIVATE
+            string loopringPrivateKey = settings.LoopringLayer2PrivateKey; //loopring private key KEEP PRIVATE
+            var metamaskPrivateKey = settings.LoopringLayer1PrivateKey; //metamask private key KEEP PRIVATE
             var fromAddress = settings.LoopringAddress; //your loopring address
             var fromAccountId = settings.LoopringAccountId; //your loopring account id
             var validUntil = settings.ValidUntil; //the examples seem to use this number
