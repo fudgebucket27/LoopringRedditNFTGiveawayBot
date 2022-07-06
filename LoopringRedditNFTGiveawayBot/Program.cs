@@ -17,7 +17,7 @@ public static class Program
 {
     static bool commentReply = true;
     static string ethAddressRegexPattern = @"0x[a-fA-F0-9]{40}";
-    static string ensAddressRegexPattern = @"([^\s]{1,256}.eth)";
+    static string ensAddressRegexPattern = @"([^\s]{1,256}.\.eth)";
     static Settings settings { get; set; }
     static List<string> nftRecievers = new List<string>();
     static void Main(string[] args)
