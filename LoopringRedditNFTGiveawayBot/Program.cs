@@ -153,8 +153,16 @@ public static class Program
                 }
             }
 
-            var storageId = loopringService.GetNextStorageId(loopringApiKey, fromAccountId, settings.NftTokenId);
-            var offChainFee = loopringService.GetOffChainFee(loopringApiKey, fromAccountId, 11, "0");
+            StorageId? storageId = null;
+            while (storageId == null) //put in while loop as loopring api returns null sometimes
+            {
+                storageId = loopringService.GetNextStorageId(loopringApiKey, fromAccountId, settings.NftTokenId);
+            }
+            OffchainFee? offChainFee = null;
+            while (offChainFee == null) //put in while loop as loopring api returns null sometimes
+            {
+                offChainFee = loopringService.GetOffChainFee(loopringApiKey, fromAccountId, 11, "0");
+            }
 
             //Calculate eddsa signautre
             BigInteger[] poseidonInputs =
@@ -302,8 +310,16 @@ public static class Program
                     Console.WriteLine(value: $"Transfer to {toAddress} failed with error: {result.resultInfo.message}");
                     try
                     {
-                        comment.Reply($"Transfer failed with error: {result.resultInfo.message}. Please make a new comment with your address and try again...");
-                        continue;
+                        if(result.resultInfo.message.ToLower().Contains("not enough"))
+                        {
+                            Console.WriteLine("***RAN OUT OF NFTs....TERMINATING PROGRAM***");
+                            System.Environment.Exit(0);
+                        }
+                        else
+                        {
+                            comment.Reply($"Transfer failed with error: {result.resultInfo.message}. Please make a new comment with your address and try again...");
+                            continue;
+                        }
                     }
                     catch (Reddit.Exceptions.RedditRateLimitException ex)
                     {
