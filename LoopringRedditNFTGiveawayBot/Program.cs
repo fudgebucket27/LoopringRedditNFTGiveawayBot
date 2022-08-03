@@ -280,7 +280,7 @@ public static class Program
                     feeTokenID = maxFeeTokenId,
                     maxFee = offChainFee.fees[maxFeeTokenId].fee,
                     validUntil = (int)validUntil,
-                    storageID = storageId.offchainId
+                    storageID = storageId.offchainId.Value
                 },
                 primaryType = primaryTypeName,
                 types = new TransferTypedData.Types()
@@ -328,7 +328,7 @@ public static class Program
                 nftAmount: settings.NftAmount,
                 maxFeeTokenId: maxFeeTokenId,
                 maxFeeAmount: offChainFee.fees[maxFeeTokenId].fee,
-                storageId.offchainId,
+                storageId.offchainId.Value,
                 validUntil: validUntil,
                 eddsaSignature: eddsaSignature,
                 ecdsaSignature: ecdsaSignature,

@@ -18,7 +18,7 @@ public class LoopringService : ILoopringService
         _client = new RestClient(_baseUrl);
     }
 
-    public StorageId GetNextStorageId(string apiKey, int accountId, int sellTokenId)
+    public StorageId? GetNextStorageId(string apiKey, int accountId, int sellTokenId)
     {
         var request = new RestRequest("api/v3/storageId");
         request.AddHeader("x-api-key", apiKey);
@@ -36,7 +36,7 @@ public class LoopringService : ILoopringService
         }
     }
 
-    public OffchainFee GetOffChainFee(string apiKey, int accountId, int requestType, string amount)
+    public OffchainFee? GetOffChainFee(string apiKey, int accountId, int requestType, string amount)
     {
         var request = new RestRequest("api/v3/user/nft/offchainFee");
         request.AddHeader("x-api-key", apiKey);

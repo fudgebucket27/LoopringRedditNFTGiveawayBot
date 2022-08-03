@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 public interface ILoopringService
 {
-    StorageId GetNextStorageId(string apiKey, int accountId, int sellTokenId);
-    OffchainFee GetOffChainFee(string apiKey, int accountId, int requestType, string amount);
+    StorageId? GetNextStorageId(string apiKey, int accountId, int sellTokenId);
+    OffchainFee? GetOffChainFee(string apiKey, int accountId, int requestType, string amount);
     EnsResult GetHexAddress(string apiKey, string ens);
     string SubmitNftTransfer(
         string apiKey,
