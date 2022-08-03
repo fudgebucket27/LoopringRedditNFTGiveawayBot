@@ -379,7 +379,7 @@ public static class Program
                         {
                             try
                             {
-                                comment.Reply($"Sent! Transaction Hash: {result.hash}");
+                                comment.Reply($"Sent! Transaction Hash: {result.hash}. Tips for transfer fees are appreciated and can be sent to fudgey.eth!");
                                 continue;
                             }
                             catch(Reddit.Exceptions.RedditRateLimitException ex)
