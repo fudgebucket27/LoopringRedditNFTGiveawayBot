@@ -20,6 +20,7 @@ public static class Program
     static string ensAddressRegexPattern = @"([^\s]{1,256}.\.eth)";
     static Settings settings { get; set; }
     static List<string> nftRecievers = new List<string>();
+    static String logFileName = "";
     static void Main(string[] args)
     {
         //var token = Helpers.AuthorizeUser("_zO6qlBIQxfpqk81uBq9DA");
@@ -33,8 +34,33 @@ public static class Program
 
         string postId = "t3_" + settings.RedditPostId;
 
+        logFileName = $"{settings.RedditPostId}.txt";
+        if (File.Exists(logFileName))
+        {
+            using (StreamReader sr = File.OpenText(logFileName))
+            {
+                string address = "";
+                Console.WriteLine("Loading previous log file");
+                while ((address = sr.ReadLine()) != null)
+                {
+                    nftRecievers.Add(address);
+                }
+            }
+        }
+        else
+        {
+            Console.WriteLine("Log file doesn't exist! Creating!");
+            using (StreamWriter sw = File.CreateText(logFileName))
+            {
+                
+            }
+        }
+
         var reddit = new RedditClient(appId: settings.RedditAppId, refreshToken: settings.RedditRefreshToken, accessToken: settings.RedditAccessToken);
         var post = reddit.Subreddit(settings.Subreddit).Post(postId).About();
+        
+
+
         post.Comments.NewUpdated += C_NewPostsUpdated;
         post.Comments.MonitorNew();
         Console.WriteLine($"Now monitoring");
@@ -44,6 +70,7 @@ public static class Program
     public static void C_NewPostsUpdated(object sender, CommentsUpdateEventArgs e)
     {
         ILoopringService loopringService = new LoopringService();//Initialize loopring service
+        string logFileName = $"{settings.RedditPostId}.txt";
         foreach (var comment in e.Added)
         {
             var commentBody = "";
@@ -339,6 +366,10 @@ public static class Program
                     {
                         nftRecievers.Add(toAddress);
                         Console.WriteLine($"Transfer to {toAddress} successful!");
+                        using (StreamWriter sw = File.AppendText(logFileName)) //Put address in text file
+                        {
+                            sw.WriteLine(toAddress);
+                        }
                         if (commentReply == true)
                         {
                             try
