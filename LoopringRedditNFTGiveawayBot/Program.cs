@@ -19,7 +19,7 @@ public static class Program
     static string ethAddressRegexPattern = @"0x[a-fA-F0-9]{40}";
     static string ensAddressRegexPattern = @"([^\s]{1,256}.\.eth)";
     static Settings settings { get; set; }
-    static List<string> nftRecievers = new List<string>();
+    static List<NftReciever> nftRecievers = new List<NftReciever>();
     static String logFileName = "";
     static void Main(string[] args)
     {
@@ -43,7 +43,7 @@ public static class Program
                 Console.WriteLine("Loading previous log file");
                 while ((address = sr.ReadLine()) != null)
                 {
-                    nftRecievers.Add(address);
+                    nftRecievers.Add(new NftReciever() { loadedFromLogFile = true, address = address });
                 }
             }
         }
@@ -160,7 +160,12 @@ public static class Program
                 }
             }
 
-            if (nftRecievers.Contains(toAddress))
+            if(nftRecievers.Where(x=> x.address == toAddress && x.loadedFromLogFile == true).Any())
+            {
+                Console.WriteLine("Already sent! Skipping");
+                continue;
+            }
+            else if (nftRecievers.Where(x => x.address == toAddress).Any())
             {
                 Console.WriteLine("Already sent! Skipping");
                 try
@@ -364,7 +369,7 @@ public static class Program
                     var result = JsonConvert.DeserializeObject<TransferResponse>(nftTransferResponseObject);
                     if (result.status.Contains("process") || result.status.Contains("received"))
                     {
-                        nftRecievers.Add(toAddress);
+                        nftRecievers.Add(new NftReciever() { loadedFromLogFile = false, address = toAddress});
                         Console.WriteLine($"Transfer to {toAddress} successful!");
                         using (StreamWriter sw = File.AppendText(logFileName)) //Put address in text file
                         {

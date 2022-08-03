@@ -8,6 +8,6 @@ using System.Threading.Tasks;
 
 public class NftReciever
 {
-    public Comment comment { get; set; }
+    public bool loadedFromLogFile { get; set; }
     public string address { get; set; }
 }
