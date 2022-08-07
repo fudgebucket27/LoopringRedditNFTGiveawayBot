@@ -138,6 +138,7 @@ public static class Program
                 if (!String.IsNullOrEmpty(varHexAddress.data))
                 {
                     toAddress = varHexAddress.data;
+                    Thread.Sleep(500);
                 }
                 else
                 {
