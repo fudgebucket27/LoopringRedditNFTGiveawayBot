@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 public class EnsResultInfo
 {
-    public int code { get; set; }
-    public string message { get; set; }
+    public int? code { get; set; }
+    public string? message { get; set; }
 }
 
 public class EnsResult
 {
-    public EnsResultInfo resultInfo { get; set; }
-    public string data { get; set; }
+    public EnsResultInfo? resultInfo { get; set; }
+    public string? data { get; set; }
 }
 

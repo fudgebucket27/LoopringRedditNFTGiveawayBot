@@ -9,7 +9,7 @@ public interface ILoopringService
 {
     StorageId? GetNextStorageId(string apiKey, int accountId, int sellTokenId);
     OffchainFee? GetOffChainFee(string apiKey, int accountId, int requestType, string amount);
-    EnsResult GetHexAddress(string apiKey, string ens);
+    EnsResult? GetHexAddress(string apiKey, string ens);
     string SubmitNftTransfer(
         string apiKey,
         string exchange,

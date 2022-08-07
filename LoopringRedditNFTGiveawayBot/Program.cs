@@ -134,11 +134,14 @@ public static class Program
             string toAddress = workingAddress; //the Address to send it to
             if (toAddress.ToLower().Trim().Contains(".eth"))
             {
-                var varHexAddress = loopringService.GetHexAddress(settings.LoopringApiKey, toAddress.ToLower().Trim());
-                if (!String.IsNullOrEmpty(varHexAddress.data))
+                EnsResult? ensResult = null;
+                while(ensResult == null)
                 {
-                    toAddress = varHexAddress.data;
-                    Thread.Sleep(500);
+                    ensResult = loopringService.GetHexAddress(settings.LoopringApiKey, toAddress.ToLower().Trim());
+                }
+                if (!String.IsNullOrEmpty(ensResult.data))
+                {
+                    toAddress = ensResult.data;
                 }
                 else
                 {
