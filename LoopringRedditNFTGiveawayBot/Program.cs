@@ -84,6 +84,12 @@ public static class Program
                 commentBody = comment.Body.ToLower();
             }
 
+            if (!commentBody.Contains("$gimmegmerica"))
+            {
+                Console.WriteLine("Does not contain $gimmegmerica. Skipping");
+                continue;
+            }
+
             var hexAddress = "";
             foreach (Match m in Regex.Matches(commentBody, ethAddressRegexPattern))
             {
@@ -143,6 +149,7 @@ public static class Program
                 {
                     toAddress = ensResult.data;
                 }
+                /*
                 else
                 {
                     try
@@ -162,6 +169,7 @@ public static class Program
                         continue;
                     }
                 }
+                */
             }
 
             if(nftRecievers.Where(x=> x.address == toAddress && x.loadedFromLogFile == true).Any())
@@ -172,23 +180,17 @@ public static class Program
             else if (nftRecievers.Where(x => x.address == toAddress).Any())
             {
                 Console.WriteLine("Already sent! Skipping");
-                try
-                {
-                    comment.Reply("You've already claimed the giveaway!");
-                    continue;
-                }
-                catch (Reddit.Exceptions.RedditRateLimitException ex)
-                {
-                    Console.WriteLine(ex.Message);
-                    continue;
-                }
-                catch (Reddit.Exceptions.RedditControllerException ex)
-                {
-                    Console.WriteLine(ex.Message);
-                    continue;
-                }
+                continue;
             }
 
+            nftRecievers.Add(new NftReciever() { loadedFromLogFile = false, address = toAddress });
+
+            using (StreamWriter sw = File.AppendText(logFileName)) //Put address in text file
+            {
+                sw.WriteLine(toAddress);
+            }
+
+            /*
             StorageId? storageId = null;
             while (storageId == null) //put in while loop as loopring api returns null sometimes
             {
@@ -408,6 +410,7 @@ public static class Program
             {
                 Console.WriteLine($"Transfer to {toAddress} unsuccessful!");
             }
+            */
         }
     }
 }
